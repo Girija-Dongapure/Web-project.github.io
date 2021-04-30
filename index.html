@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	 <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style type="text/css">
+    	#datepicker{
+    		width:180px;margin: 0 20px 20px 20px;
+    	}
+    	#datepicker > span:hover{
+    		cursor: pointer;
+    	}
+    	body{
+    		background-image: url('https://tse2.mm.bing.net/th?id=OIP.TSzi2CL5C2oDZTWl0MUPHgHaEo&pid=Api&P=0&w=10000%&h=10000%')
+    	}
+    	
+    </style>
+
+<title>Web Service</title>
+</head>
+<body><i>
+	<center><h1 style="color:skyblue;">Currency Rates</h1></center>
+	<center>
+		
+		<div id="datepicker" class="input-group date" data-date-format="yyyy-mm-dd">
+	<input class="form-control" type="date" name="" id="text">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+</div>
+		<div><button type="button" class="btn btn-info" onclick="ajaxCall()">Enter</button></div>
+
+
+	</center>
+	<div id="result"></div>
+<script type="text/javascript">
+	
+	
+		function ajaxCall(){
+			var inp1=document.getElementById("text")
+			var val=inp1.value;
+			console.log(val)
+			var http=new XMLHttpRequest();
+			http.onreadystatechange=function(){
+				if(this.readyState==4 && this.status==200){
+					var data=this.responseText;
+					var myObj=JSON.parse(data);
+					var element=document.getElementById("result");
+			
+
+			var currency = '<br><center><div class="card bg-warning" style="max-width: 18rem;"><div class="card-header" style="color:blue;"><strong>Currency Rates:</strong></div><div class="card-body"><p class="card-text">Date : '+myObj.response.date+'<br>Base:  '+myObj.response.base+'<br>Rates -<br>USD : '+myObj.response.rates.USD+'<br>EUR : '+myObj.response.rates.EUR+'<br>GBP : '+myObj.response.rates.GBP+'<br>INR : '+myObj.response.rates.INR+'<br>MXV : '+myObj.response.rates.MXV+' </p></div></div></br><center>';
+		                element.innerHTML = currency;
+
+		             console.log("Http status:"+this.status)
+					
+				}
+				else{
+					console.log("Http request is not successfull:"+this.status)
+				}
+			};
+			http.open("GET", "https://currencyscoop.p.rapidapi.com/historical?date="+val);
+http.setRequestHeader("x-rapidapi-key", "757cdcfb0amsh42aa32d99fe00f1p1c93d3jsn702fefb40778");
+http.setRequestHeader("x-rapidapi-host", "currencyscoop.p.rapidapi.com");
+
+http.send();
+		}
+
+
+
+</script>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+	</i></body>
+
+</html>
